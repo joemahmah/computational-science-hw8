@@ -37,6 +37,6 @@ public class Tower implements Serializable {
 	}
         
         public String toString(){
-            return getEta() + " " + getPhi() + " " + getEnergy() + " " + getSize();
+            return getPhi() + "," + getEta() + "," + getEnergy() + "," + getSize();
         }
 }

@@ -6,6 +6,12 @@
 package particlePhysics;
 
 import core.utility.IOHelper;
+import core.utility.TowerWriterCSV;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -21,8 +27,12 @@ public class Boot {
 
     public static void main(String[] args) {
 
-        Boot b = new Boot();
-        b.level1();
+        try {
+            Boot b = new Boot();
+            b.level1();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Boot.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
@@ -32,12 +42,22 @@ public class Boot {
         visualizer = ClusterVisualizer.createVisualizer();
     }
 
-    public void level1() {
+    public void level1() throws FileNotFoundException {
+
+        TowerWriterCSV writer = new TowerWriterCSV("data/level1.csv");
+        int eventIndex = 0;
 
         for (CalorimeterEvent e : data.getEvents()) {
+            int towerIndex = 0;
             for (Tower t : e.getTowers()) {
+
                 visualizer.addTower(t);
+                writer.listTower(eventIndex, towerIndex, t);
+
+                towerIndex++;
             }
+
+            eventIndex++;
         }
     }
 }
