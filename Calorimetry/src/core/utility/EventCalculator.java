@@ -6,6 +6,7 @@
 package core.utility;
 
 import java.util.ArrayList;
+import java.util.Random;
 import particlePhysics.CalorimeterEvent;
 import particlePhysics.Tower;
 
@@ -35,16 +36,21 @@ public class EventCalculator {
         median = Mathematics.calcMedian(values);
 
         ArrayList<Double> possibleBValues = new ArrayList<>();
-        for (Tower t : event.getTowers()) {
-            double energy = t.getEnergy();
-            double pi = Math.PI;
-            double xpos = t.getPhi();
-
-            //Solves for b
-            double b1 = (1 + Math.sqrt(1 - 4 * pi * energy * (pi * xpos * xpos - 2 * pi * xpos * median * energy + pi * median * median * energy))) / (2 * pi * energy);
-            double b2 = (1 - Math.sqrt(1 - 4 * pi * energy * (pi * xpos * xpos - 2 * pi * xpos * median * energy + pi * median * median * energy))) / (2 * pi * energy);
-            possibleBValues.add(b1);
-            possibleBValues.add(b2);
+//        for (Tower t : event.getTowers()) {
+//            double energy = t.getEnergy();
+//            double pi = Math.PI;
+//            double xpos = t.getPhi();
+//
+//            //Solves for b
+//            double b1 = (1 + Math.sqrt(1 - 4 * pi * energy * (pi * xpos * xpos - 2 * pi * xpos * median * energy + pi * median * median * energy))) / (2 * pi * energy);
+//            double b2 = (1 - Math.sqrt(1 - 4 * pi * energy * (pi * xpos * xpos - 2 * pi * xpos * median * energy + pi * median * median * energy))) / (2 * pi * energy);
+//            possibleBValues.add(b1);
+//            possibleBValues.add(b2);
+//        }
+        
+        for(int i=0; i<Short.MAX_VALUE * 10; i++){
+            Random rand = new Random();
+            possibleBValues.add(rand.nextDouble());
         }
 
         double highestChi2 = 0;
