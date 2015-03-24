@@ -32,6 +32,7 @@ public class Boot {
         try {
             Boot b = new Boot();
             b.level1();
+            b.level2();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Boot.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -41,7 +42,7 @@ public class Boot {
     public Boot() {
         reader = new IOHelper<>();
         data = reader.read(dataFileLocation);
-        visualizer = ClusterVisualizer.createVisualizer();
+//        visualizer = ClusterVisualizer.createVisualizer();
     }
 
     public void level1() throws FileNotFoundException {
@@ -53,7 +54,7 @@ public class Boot {
             int towerIndex = 0;
             for (Tower t : e.getTowers()) {
 
-                visualizer.addTower(t);
+//                visualizer.addTower(t);
                 writer.listTower(eventIndex, towerIndex, t);
 
                 towerIndex++;
@@ -71,11 +72,14 @@ public class Boot {
         for (CalorimeterEvent e : data.getEvents()) {
             int towerIndex = 0;
 
+            writer.addEventData(eventIndex, e);
             for (Tower t : e.getTowers()) {
                 writer.listTower(eventIndex, towerIndex, t);
                 towerIndex++;
             }
             eventIndex++;
         }
+        
+        writer.printEventData();
     }
 }

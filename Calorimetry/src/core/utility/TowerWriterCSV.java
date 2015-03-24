@@ -46,7 +46,7 @@ public class TowerWriterCSV {
     public void addEventData(int eventIndex, CalorimeterEvent e){
         EventCalculator eventCalc = new EventCalculator(e);
         
-        eventDataBuffer.add(eventIndex + ",");
+        eventDataBuffer.add(eventIndex + "," + eventCalc.getMedian() + "," + eventCalc.getBValue());
     }
     
 }
