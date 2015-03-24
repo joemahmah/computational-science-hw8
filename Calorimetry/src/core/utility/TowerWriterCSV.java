@@ -8,6 +8,8 @@ package core.utility;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import particlePhysics.CalorimeterEvent;
 import particlePhysics.Tower;
 
 /**
@@ -18,6 +20,7 @@ public class TowerWriterCSV {
     
     private File file;
     private PrintStream writer;
+    private ArrayList<String> eventDataBuffer = new ArrayList<>();
     
     public TowerWriterCSV(String location) throws FileNotFoundException{
         file = new File(location);
@@ -31,6 +34,19 @@ public class TowerWriterCSV {
     
     public void listTower(int eventIndex, int towerIndex, Tower tower){
         writer.println(eventIndex + "," + towerIndex + "," + tower);
+    }
+    
+    public void printEventData(){
+        writer.println("\nEvent Index,median,b");
+        for(String eventData: eventDataBuffer){
+            writer.println(eventData);
+        }
+    }
+    
+    public void addEventData(int eventIndex, CalorimeterEvent e){
+        EventCalculator eventCalc = new EventCalculator(e);
+        
+        eventDataBuffer.add(eventIndex + ",");
     }
     
 }

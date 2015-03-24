@@ -6,10 +6,12 @@
 package particlePhysics;
 
 import core.utility.IOHelper;
+import core.utility.Mathematics;
 import core.utility.TowerWriterCSV;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,7 +28,7 @@ public class Boot {
     public static final String dataFileLocation = "data/calorimeterData.dat";
 
     public static void main(String[] args) {
-
+        
         try {
             Boot b = new Boot();
             b.level1();
@@ -57,6 +59,22 @@ public class Boot {
                 towerIndex++;
             }
 
+            eventIndex++;
+        }
+    }
+
+    public void level2() throws FileNotFoundException {
+
+        TowerWriterCSV writer = new TowerWriterCSV("data/level2.csv");
+        int eventIndex = 0;
+
+        for (CalorimeterEvent e : data.getEvents()) {
+            int towerIndex = 0;
+
+            for (Tower t : e.getTowers()) {
+                writer.listTower(eventIndex, towerIndex, t);
+                towerIndex++;
+            }
             eventIndex++;
         }
     }
